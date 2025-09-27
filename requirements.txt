@@ -4,3 +4,4 @@ faiss-cpu
 numpy
 openCV-Python
 matplotlib
+gdown
