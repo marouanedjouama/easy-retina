@@ -1,3 +1,15 @@
+create a new conda env (RECOMMENDED)
+``` shell
+conda create -n easy-retina python=3.10
+conda activate easy-retina
+```
+
+download dependencies 
+``` shell
+pip install -r requirements.txt
+```
+
+
 Download face detection & recognition models
 
 ``` shell
