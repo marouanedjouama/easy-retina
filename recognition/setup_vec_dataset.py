@@ -12,13 +12,13 @@ ROOT = FILE.parents[0]
 
 data_output_path = os.path.join(ROOT, "data.pkl")
 
-model_path = os.path.join(ROOT,"models/WebFace600K.onnx")
+model_path = os.path.join(ROOT,"models/resnet_34.onnx")
 if not os.path.isfile(model_path):
-    print(f"❌ File not found: {model_path}")
+    raise FileNotFoundError(f"❌ File not found: {model_path}")
 
-faces_dir = os.path.join(ROOT, "face_dataset")
+faces_dir = os.path.join(ROOT.parents[0], "face_dataset")
 if not os.path.isdir(faces_dir):
-    print(f"❌ Directory not found: {faces_dir}")
+    raise FileNotFoundError(f"❌ Directory not found: {faces_dir}")
 
 
 vec_dataset = {}
@@ -34,7 +34,7 @@ for dirname in os.listdir(faces_dir):
         image = cv2.imread(filepath)
         if image is None:
             print(f"⚠️ Could not load image: {filepath}")
-            continue 
+            continue  # skip this file
 
         embd = recognition_model.get_feat(image)
         embeds.append(embd)

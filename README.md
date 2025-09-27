@@ -1,14 +1,14 @@
-Load face recognition model
+Download face detection & recognition models
 
 ``` shell
-bash scripts/get_model.sh
+bash scripts/download_models.sh
 ```
 
 You should rearrange your dataset directory structure as illustrated below.
 
 ```bash
 user
-├── database
+├── face_dataset
 │   ├── Alice
 │   │   ├── Alice1.jpg
 │   │   ├── Alice2.jpg
@@ -20,12 +20,19 @@ user
 Process the dataset
 
 ``` python
+cd recognition
 python setup_vec_dataset.py
 ```
 
-
-run the model on a test image 
+run the recognition model on a test image 
 
 ``` python
-python recognize.py
+python recognize.py --image alice.jpg
+```
+
+run the detection model on a test image 
+
+``` python
+cd ../detection
+python detect.py --image bob.jpg
 ```
