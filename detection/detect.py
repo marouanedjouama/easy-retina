@@ -212,7 +212,7 @@ class SCRFD:
 def parse_args():
     parser = argparse.ArgumentParser(description="Face recognition inference")
     parser.add_argument("--image", required=True, type=str, help="Path to the test image")
-    parser.add_argument("--model",type=str, default="models/det_2.5g.onnx", help="Path to the detection model image")
+    parser.add_argument("--model",type=str, default="models/scrfd_2.5g.onnx", help="Path to the detection model image")
   
     return parser.parse_args()
 

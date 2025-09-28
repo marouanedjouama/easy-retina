@@ -12,7 +12,7 @@ ROOT = FILE.parents[0]
 
 data_output_path = os.path.join(ROOT, "data.pkl")
 
-model_path = os.path.join(ROOT,"models/resnet_34.onnx")
+model_path = os.path.join(ROOT,"models/resnet34.onnx")
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"❌ File not found: {model_path}")
 
