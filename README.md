@@ -33,15 +33,23 @@ you will get an additional recognition_test folder with testing images.
 
 ``` shell
 gdown 1Mgx5L8l2FO1laaWl0_vaE41D4Zohq1qs
-unzip celeb_face_dataset.zip
-rm celeb_face_dataset.zip
+unzip celeb_face_dataset_full.zip
+rm celeb_face_dataset_full.zip
 ```
 
+run the detection model over the dataset to extract faces crops
+``` python
+cd detection
+python process_dataset.py
+```
 
-Process the dataset
+this will create a new directory named face_crops_dataset of cropped faces with the same structure above
+
+
+Process the new dataset of cropped faces for facial recognition
 
 ``` python
-cd recognition
+cd ../recognition
 python setup_vec_dataset.py
 ```
 

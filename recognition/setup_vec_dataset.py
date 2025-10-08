@@ -16,7 +16,7 @@ model_path = os.path.join(ROOT,"models/resnet_34.onnx")
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"❌ File not found: {model_path}")
 
-faces_dir = os.path.join(ROOT.parents[0], "face_dataset")
+faces_dir = os.path.join(ROOT.parents[0], "face_crops_dataset")
 if not os.path.isdir(faces_dir):
     raise FileNotFoundError(f"❌ Directory not found: {faces_dir}")
 
