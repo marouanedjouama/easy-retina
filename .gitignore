@@ -1,4 +1,5 @@
 face_dataset/
+face_crops_dataset/
 recognition_test/
 detection/models
 recognition/models

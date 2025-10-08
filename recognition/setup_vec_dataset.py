@@ -23,7 +23,7 @@ if not os.path.isdir(faces_dir):
 
 vec_dataset = {}
 
-recognition_model = insightface.model_zoo.get_model(model_path)
+recognition_model = insightface.model_zoo.get_model(model_path, providers=['CPUExecutionProvider'])
 
 for dirname in os.listdir(faces_dir):
     dirpath = os.path.join(faces_dir, dirname)
