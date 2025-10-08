@@ -20,7 +20,7 @@ new_faces_dir = os.path.join(ROOT.parents[0], "face_crops_dataset")
 os.makedirs(new_faces_dir, exist_ok=True)
 
 
-model_path = os.path.join(ROOT,"models/det_2.5g.onnx")
+model_path = os.path.join(ROOT,"models/scrfd_2.5g.onnx")
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"❌ File not found: {model_path}")
 
