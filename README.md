@@ -32,7 +32,7 @@ OR you can download an already structured celeb faces dataset for testing.\
 you will get an additional recognition_test folder with testing images.
 
 ``` shell
-gdown 1njI6FutLy2enMrBU2-wfyiUpmeBIiDA_
+gdown 1g6rKAODdFxftcgy8LCbWvdJPQjcZFEL_
 unzip celeb_face_dataset_full.zip
 rm celeb_face_dataset_full.zip
 ```
