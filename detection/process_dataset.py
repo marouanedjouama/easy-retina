@@ -25,13 +25,6 @@ recognition_test_dir = os.path.join(ROOT.parents[0], "recognition_test")
 os.makedirs(recognition_test_dir, exist_ok=True)
 
 
-print(ROOT)
-print(faces_dir)
-print(new_faces_dir)
-
-exit()
-
-
 model_path = os.path.join(ROOT,"models/scrfd_2.5g.onnx")
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"❌ File not found: {model_path}")
