@@ -64,20 +64,31 @@ def draw_detections(image, detections, conf_threshold=0.5):
     """
     dimg = image.copy()
 
+
     for det in detections:
-        x1, y1, x2, y2, score = det
+        is_real, spoof_score = True, 0.0
+        if isinstance(det, list):
+            x1, y1, x2, y2, score = det
+        
+        else:
+            box, is_real, spoof_score = det
+            x1, y1, x2, y2, score = box
         if score < conf_threshold:
             continue
 
         # Convert to int for drawing
         x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
+        
+
+        if is_real:
+            color= (0, 255, 0)
+        else:
+            color= (0, 0, 255)
 
         # Draw rectangle
-        cv2.rectangle(dimg, (x1, y1), (x2, y2), (0, 0, 255), 1)
-
-        # Put confidence text
-        label = f"{score:.2f}"
+        cv2.rectangle(dimg, (x1, y1), (x2, y2), color, 1)
+        label = f"{score:.2f} | {'real' if is_real else 'fake'} | score: {spoof_score:.2f}"
         cv2.putText(dimg, label, (x1, y1 - 5),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+            cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
 
     return dimg

@@ -2,6 +2,7 @@ face_dataset/
 face_crops_dataset/
 recognition_test/
 detection/models
+detection/anti_spoof/models
 recognition/models
 recognition/data.pkl
 recognition/__pycache__

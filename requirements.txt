@@ -5,3 +5,6 @@ numpy
 openCV-Python
 matplotlib
 gdown
+tensorflow
+keras
+torch 
