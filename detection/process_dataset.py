@@ -2,11 +2,13 @@
 this script processes full images and returns cropped faces found (works with data structured according the readme file) 
 """
 
-
 import os
 import cv2
 from pathlib import Path
 from detect import SCRFD
+import random
+import shutil
+
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]
@@ -19,6 +21,16 @@ if not os.path.isdir(faces_dir):
 new_faces_dir = os.path.join(ROOT.parents[0], "face_crops_dataset")
 os.makedirs(new_faces_dir, exist_ok=True)
 
+recognition_test_dir = os.path.join(ROOT.parents[0], "recognition_test")
+os.makedirs(recognition_test_dir, exist_ok=True)
+
+
+print(ROOT)
+print(faces_dir)
+print(new_faces_dir)
+
+exit()
+
 
 model_path = os.path.join(ROOT,"models/scrfd_2.5g.onnx")
 if not os.path.isfile(model_path):
@@ -28,6 +40,7 @@ if not os.path.isfile(model_path):
 detector = SCRFD(model_path=model_path, conf_thres=0.4)
 pad = 5  # pixels to pad around the face bounding box
 for dirname in os.listdir(faces_dir):
+
     dirpath = os.path.join(faces_dir, dirname)
 
     target_dir_path = os.path.join(new_faces_dir, dirname)
@@ -63,3 +76,33 @@ for dirname in os.listdir(faces_dir):
             cv2.imwrite(os.path.join(target_dir_path, f'{filename}_face_{i}.jpg'), face)      # save each face
 
     print(f"Processed {dirname}")
+
+
+
+# list all person folders inside new_faces_dir
+person_folders = [f for f in os.listdir(new_faces_dir) if os.path.isdir(os.path.join(new_faces_dir, f))]
+
+if len(person_folders) < 2:
+    num_to_pick = 1
+else:
+    num_to_pick = 2
+
+
+# pick 2 random distinct persons
+selected_persons = random.sample(person_folders, num_to_pick)
+
+for person in selected_persons:
+
+    person_path = os.path.join(new_faces_dir, person)
+    images = [f for f in os.listdir(person_path) if os.path.isfile(os.path.join(person_path, f))]
+
+    if not images:
+        print(f"⚠️ No images found for {person}, skipping...")
+        continue
+
+    # pick a random image
+    chosen_img = random.choice(images)
+    src = os.path.join(person_path, chosen_img)
+    dst = os.path.join(recognition_test_dir, f"{person}_{chosen_img}")
+    shutil.move(src, dst)
+    
