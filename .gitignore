@@ -1,2 +1,7 @@
 face_dataset/
 recognition_test/
+detection/models
+recognition/models
+recognition/data.pkl
+recognition/__pycache__
+detection/__pycache__

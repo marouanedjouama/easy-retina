@@ -18,7 +18,7 @@ if not os.path.isfile(data_output_path):
 def parse_args():
     parser = argparse.ArgumentParser(description="Face recognition inference")
     parser.add_argument("--image", required=True, type=str, help="Path to the test image")
-    parser.add_argument("--model",type=str, default="models/resnet_34.onnx", help="Path to the recognition model image")
+    parser.add_argument("--model",type=str, default="models/resnet34.onnx", help="Path to the recognition model image")
   
     return parser.parse_args()
 
