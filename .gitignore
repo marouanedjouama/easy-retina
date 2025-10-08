@@ -6,3 +6,4 @@ recognition/models
 recognition/data.pkl
 recognition/__pycache__
 detection/__pycache__
+*.pyc

@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import onnxruntime
 
-from helpers import distance2bbox, distance2kps, draw_detections
+from .helpers import distance2bbox, distance2kps, draw_detections
 from typing import Tuple
 
 import argparse
