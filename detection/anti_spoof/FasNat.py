@@ -4,8 +4,8 @@ from typing import Union
 import os
 import cv2
 import numpy as np
-from detection.anti_spoof import weight_utils
-from detection.detect import SCRFD
+from anti_spoof import weight_utils
+from detect import SCRFD
 
 
 # pylint: disable=line-too-long, too-few-public-methods, nested-min-max
@@ -44,7 +44,7 @@ class Fasnet:
         )
 
         # guarantees Fasnet imported and torch installed
-        from detection.anti_spoof import FasNetBackbone
+        from anti_spoof import FasNetBackbone
 
         # Fasnet will use 2 distinct models to predict, then it will find the sum of predictions
         # to make a final prediction

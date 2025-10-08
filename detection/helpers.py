@@ -67,7 +67,7 @@ def draw_detections(image, detections, conf_threshold=0.5):
 
     for det in detections:
         is_real, spoof_score = True, 0.0
-        if isinstance(det, list):
+        if isinstance(det, np.ndarray):
             x1, y1, x2, y2, score = det
         
         else:
@@ -92,3 +92,55 @@ def draw_detections(image, detections, conf_threshold=0.5):
             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
 
     return dimg
+
+
+def blur_faces(frame, boxes, blocks=15, padding=0.2):
+
+    for box in boxes:
+        if isinstance(box, np.ndarray):
+            x1, y1, x2, y2,_ = box
+        else:
+            x1, y1, x2, y2,_ = box[0]
+
+        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+
+        # Compute width/height
+        w = x2 - x1
+        h = y2 - y1
+
+        # Add padding
+        pad_w = int(w * padding)
+        pad_h = int(h * padding)
+        x1 = max(0, x1 - pad_w)
+        y1 = max(0, y1 - pad_h)
+        x2 = min(frame.shape[1], x2 + pad_w)
+        y2 = min(frame.shape[0], y2 + pad_h)
+
+        if x2 <= x1 or y2 <= y1:
+            continue
+
+        # Extract ROI
+        roi = frame[y1:y2, x1:x2]
+
+        if roi.size == 0:
+            continue
+
+        h_roi, w_roi = roi.shape[:2]
+
+        # Pixelate: resize down and back up
+        temp = cv2.resize(roi, (blocks, blocks), interpolation=cv2.INTER_LINEAR)
+        pixelated = cv2.resize(temp, (w_roi, h_roi), interpolation=cv2.INTER_NEAREST)
+
+        # Create oval mask
+        mask = np.zeros_like(roi, dtype=np.uint8)
+        center = (roi.shape[1] // 2, roi.shape[0] // 2)
+        axes = (roi.shape[1] // 2, roi.shape[0] // 2)
+        cv2.ellipse(mask, center, axes, 0, 0, 360, (255, 255, 255), -1)
+
+        # Blend original and pixelated with oval mask
+        roi = np.where(mask > 0, pixelated, roi)
+
+        # Replace back
+        frame[y1:y2, x1:x2] = roi
+        
+    return frame
