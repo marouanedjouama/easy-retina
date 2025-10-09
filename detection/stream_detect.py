@@ -40,7 +40,7 @@ def main(args):
     cap = cv2.VideoCapture(0)
 
     frame_count = 0
-    boxes_list = []
+    results = []
 
     # detect every N frames
     N = args.n_frames
@@ -51,9 +51,8 @@ def main(args):
 
         frame_count += 1
 
-
-        results = []
         if frame_count % N == 0:  
+            results = []
             boxes_list, _ = detector.detect(frame)
 
             if args.anti_spoof:
@@ -67,7 +66,7 @@ def main(args):
 
 
         if args.face_blur:
-            frame = blur_faces(frame,results)
+            frame = blur_faces(frame,results, blocks=10)
 
         if len(results):
             frame = draw_detections(frame, results, conf_threshold=0.5)
