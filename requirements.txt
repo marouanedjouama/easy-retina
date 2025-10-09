@@ -8,3 +8,4 @@ gdown
 tensorflow
 keras
 torch 
+torchvision

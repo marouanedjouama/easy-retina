@@ -51,28 +51,13 @@ def distance2kps(points, distance, max_shape=None):
 
 
 def draw_detections(image, detections, conf_threshold=0.5):
-    """
-    Draw bounding boxes from face detection results.
-    
-    Args:
-        image (np.ndarray): Input image (BGR).
-        detections (list or np.ndarray): List/array of detections [x1, y1, x2, y2, score].
-        conf_threshold (float): Minimum confidence score to draw a box.
-        
-    Returns:
-        np.ndarray: Image with drawn bounding boxes.
-    """
+
     dimg = image.copy()
 
-
     for det in detections:
-        is_real, spoof_score = True, 0.0
-        if isinstance(det, np.ndarray):
-            x1, y1, x2, y2, score = det
-        
-        else:
-            box, is_real, spoof_score = det
-            x1, y1, x2, y2, score = box
+
+
+        x1, y1, x2, y2, score = det["box"]
         if score < conf_threshold:
             continue
 
@@ -80,27 +65,36 @@ def draw_detections(image, detections, conf_threshold=0.5):
         x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
         
 
-        if is_real:
-            color= (0, 255, 0)
-        else:
+        if det["is_real"] is not None and not det["is_real"]:
             color= (0, 0, 255)
+        else:
+            color= (0, 255, 0)
+
 
         # Draw rectangle
         cv2.rectangle(dimg, (x1, y1), (x2, y2), color, 1)
-        label = f"{score:.2f} | {'real' if is_real else 'fake'} | score: {spoof_score:.2f}"
+
+        label = f"{score:.2f}"
+        if det["is_real"] is not None:
+            label += f" | {'real' if det['is_real'] else 'fake'}"
+
+
+        if det["predicted_sex"] is not None:
+            label += f" | {det['predicted_sex']}"
+
         cv2.putText(dimg, label, (x1, y1 - 5),
             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
 
     return dimg
 
 
-def blur_faces(frame, boxes, blocks=15, padding=0.2):
+def blur_faces(frame, detections, blocks=15, padding=0.2, conf_threshold=0.5):
 
-    for box in boxes:
-        if isinstance(box, np.ndarray):
-            x1, y1, x2, y2,_ = box
-        else:
-            x1, y1, x2, y2,_ = box[0]
+    for det in detections:
+        
+        x1, y1, x2, y2, score = det["box"]
+        if score < conf_threshold:
+            continue
 
         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
 

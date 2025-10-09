@@ -15,6 +15,7 @@ declare -A MODELS=(
   ["$REC_MODEL_DIR/WebFace600K.onnx"]="1N0GL-8ehw_bz2eZQWz2b0A5XBdXdxZhg"
   ["$REC_MODEL_DIR/resnet34.onnx"]="1G1oeLkp_b3JA_z4wGs62RdLpg-u_Ov2Y"
   ["$DET_MODEL_DIR/scrfd_2.5g.onnx"]="1f6T5LzpGroJwF5zZr-FsTf6Jv9ZmxUEV"
+  ["$DET_MODEL_DIR/mobilenet_gender.onnx"]="10a3InYpSUh0VDTgq1M-BTM4oPWOv99zz"
 )
 
 # Download function
