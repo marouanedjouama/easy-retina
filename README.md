@@ -65,3 +65,14 @@ run the detection model on a test image
 cd ../detection
 python detect.py --image bob.jpg
 ```
+
+Detect faces directly from your webcam:
+
+``` python
+python stream_detect.py
+```
+Optional Flags
+- `--n-frames N` : Run detection every N frames (default: 5)
+- `--face-blur` : Blur all detected faces in the video stream
+- `--anti-spoof` : Enable anti-spoofing check (real vs fake face)
+- `--gender` : Enable gender classification
